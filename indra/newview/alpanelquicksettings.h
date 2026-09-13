@@ -26,6 +26,8 @@
 #ifndef AL_ALPANELQUICKSETTINGS_H
 #define AL_ALPANELQUICKSETTINGS_H
 
+#include <string>
+
 #include "llpanel.h"
 
 class LLButton;
@@ -44,6 +46,9 @@ public:
     void refresh() override;
 
 private:
+    void applyGraphicsProfile(U32 level);
+    void applyEnvironmentPreset(const std::string& preset);
+
     void onHoverSliderMoved(const LLSD& val);
     void onHoverSliderFinalCommit();
     void syncFromPreferenceSetting();

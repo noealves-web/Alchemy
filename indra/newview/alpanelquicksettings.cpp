@@ -30,6 +30,8 @@
 #include "llbutton.h"
 #include "llcheckboxctrl.h"
 #include "llcombobox.h"
+#include "llenvironment.h"
+#include "llfeaturemanager.h"
 #include "llslider.h"
 #include "llspinctrl.h"
 
@@ -38,6 +40,7 @@
 #include "llviewerregion.h"
 #include "llvoavatar.h"
 #include "llvoavatarself.h"
+#include "rlvactions.h"
 
 static LLPanelInjector<ALPanelQuickSettings> t_quick_settings("quick_settings");
 
@@ -60,6 +63,25 @@ ALPanelQuickSettings::~ALPanelQuickSettings()
 bool ALPanelQuickSettings::postBuild()
 {
     refresh();
+
+    // Fitzroy's three practical profiles intentionally map to Alchemy's
+    // maintained feature levels. This keeps PBR enabled while allowing the
+    // feature table and GPU masks to make safe hardware-specific decisions.
+    getChild<LLButton>("profile_light_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyGraphicsProfile, this, 1));
+    getChild<LLButton>("profile_balanced_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyGraphicsProfile, this, 3));
+    getChild<LLButton>("profile_pbr_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyGraphicsProfile, this, 6));
+
+    getChild<LLButton>("environment_shared_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyEnvironmentPreset, this, "shared"));
+    getChild<LLButton>("environment_midday_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyEnvironmentPreset, this, "midday"));
+    getChild<LLButton>("environment_sunset_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyEnvironmentPreset, this, "sunset"));
+    getChild<LLButton>("environment_midnight_btn")->setCommitCallback(
+        boost::bind(&ALPanelQuickSettings::applyEnvironmentPreset, this, "midnight"));
 
     // Hover height
     mHoverSlider = getChild<LLSlider>("hover_slider_bar");
@@ -88,6 +110,47 @@ bool ALPanelQuickSettings::postBuild()
     onRegionChanged();
 
     return LLPanel::postBuild();
+}
+
+void ALPanelQuickSettings::applyGraphicsProfile(U32 level)
+{
+    LLFeatureManager::getInstance()->setGraphicsLevel(level, false);
+    gSavedSettings.setU32("RenderQualityPerformance", level);
+}
+
+void ALPanelQuickSettings::applyEnvironmentPreset(const std::string& preset)
+{
+    if (!RlvActions::canChangeEnvironment())
+    {
+        return;
+    }
+
+    LLEnvironment& environment = LLEnvironment::instance();
+    if (preset == "shared")
+    {
+        environment.setSharedEnvironment();
+        return;
+    }
+
+    LLUUID sky_id;
+    if (preset == "midday")
+    {
+        sky_id = LLEnvironment::KNOWN_SKY_MIDDAY;
+    }
+    else if (preset == "sunset")
+    {
+        sky_id = LLEnvironment::KNOWN_SKY_SUNSET;
+    }
+    else if (preset == "midnight")
+    {
+        sky_id = LLEnvironment::KNOWN_SKY_MIDNIGHT;
+    }
+
+    if (!sky_id.isNull())
+    {
+        environment.setEnvironment(LLEnvironment::ENV_LOCAL, sky_id, LLEnvironment::TRANSITION_FAST);
+        environment.setSelectedEnvironment(LLEnvironment::ENV_LOCAL, LLEnvironment::TRANSITION_FAST);
+    }
 }
 
 // virtual

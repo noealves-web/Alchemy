@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <floater
  width="300"
- height="159"
+ height="319"
  layout="topleft"
- min_height="159"
+ min_height="319"
  min_width="300"
  name="floater_quick_settings"
  positioning="cascading"
- title="QUICK SETTINGS"
+ title="FITZROY QUICK SETTINGS"
  save_rect="true"
  can_resize="true"
  can_resize_height="false">

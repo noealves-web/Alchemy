@@ -72,7 +72,7 @@ jobs:
         shell: bash
         env:
           BUILD_VCS_BRANCH: ${{ steps.which-branch.outputs.branch }}
-          VIEWER_CHANNEL_BASE: "Alchemy"
+          VIEWER_CHANNEL_BASE: "Fitzroy"
         run: |
           echo "release_run=$RELEASE_RUN" >> "$GITHUB_OUTPUT"
 
@@ -138,10 +138,12 @@ jobs:
       packages: write
     strategy:
       matrix:
-        runner: ["windows-2025-vs2026", "macos-26", "ubuntu-26.04"]
+        # Fitzroy's first closed-test target is Windows x64. Additional
+        # platforms return only after the MVP is stable on the target hardware.
+        runner: ["windows-2025-vs2026"]
         configuration: [release]
-        arch: [x64, arm64]
-        build_variant: [Viewer, Tests]
+        arch: [x64]
+        build_variant: [Viewer]
         exclude:
           - runner: ubuntu-26.04
             arch: arm64
@@ -391,7 +393,7 @@ jobs:
             cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG --target BUILD_AND_RUN_TESTS
           elif $BUILD_VIEWER
           then
-            cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG || fatal "failed building $BUILD_CONFIG viewer"
+            cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG || { echo "::error::Failed building $BUILD_CONFIG viewer"; exit 1; }
           else
             echo "::notice::Skipping build due to both viewer and tests being disabled"
           fi

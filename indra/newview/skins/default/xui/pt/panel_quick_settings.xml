@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<panel name="quick_settings">
+  <text name="graphics_profile_label" value="Perfil gráfico"/>
+  <button name="profile_light_btn" label="Leve"
+          tool_tip="Ideal para vídeo integrado; o PBR continua ativo"/>
+  <button name="profile_balanced_btn" label="Equilibrado"
+          tool_tip="Equilíbrio prático entre qualidade de imagem e fluidez"/>
+  <button name="profile_pbr_btn" label="PBR Máximo"
+          tool_tip="Qualidade PBR máxima para fotografia e placas de vídeo potentes"/>
+
+  <text name="environment_label" value="Ambiente"/>
+  <button name="environment_shared_btn" label="Região"
+          tool_tip="Usar o ambiente do terreno ou da região"/>
+  <button name="environment_midday_btn" label="Meio-dia"/>
+  <button name="environment_sunset_btn" label="Pôr do sol"/>
+  <button name="environment_midnight_btn" label="Noite"/>
+
+  <text name="draw_distance_label" value="Distância de visão:"/>
+  <text name="lod_label" value="Nível de detalhe:"/>
+  <text name="max_particles_label" value="Máx. de partículas:"/>
+  <text name="max_avatars_label" value="Máx. de avatares:"/>
+  <text name="max_bandwith_label" value="Largura de banda:"/>
+  <text name="hover_height_label" value="Altura do avatar:"/>
+</panel>
