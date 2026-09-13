@@ -367,7 +367,7 @@ std::string LLDir::buildSLOSCacheDir() const
     }
     else
     {
-        res = add(getOSCacheDir(), "AlchemyNext");
+        res = add(getOSCacheDir(), "FitzroyViewer2026");
     }
     return res;
 }

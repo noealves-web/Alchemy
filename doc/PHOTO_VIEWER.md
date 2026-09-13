@@ -1,8 +1,8 @@
-# Lightweight PBR Photo Viewer
+# Fitzroy Viewer 2026 — Lightweight PBR Photo Viewer
 
 ## Product goal
 
-Build a Second Life viewer that keeps current PBR rendering compatibility while
+Build Fitzroy Viewer 2026 for Windows 10/11 x64 with current Second Life PBR compatibility while
 combining a low-overhead everyday mode with a dedicated, lossless photo mode.
 The viewer should remain usable on modest Windows PCs and expose environment
 controls in a photographer-oriented workflow.
@@ -92,16 +92,17 @@ Texture resolution and snapshot resolution are not early degradation targets.
 
 ## Delivery phases
 
-### Phase 0 — reproducible Windows build
+### Phase 0 — reproducible Windows 10/11 x64 build
 
 - Keep the upstream `develop` branch as the synchronization source.
 - Build the open-source x64 variant with Visual Studio 2026.
 - Preserve the original compiler error in CI logs.
 - Produce an unsigned private test installer and checksum.
 
-### Phase 1 — branded technical baseline
+### Phase 1 — Fitzroy-branded technical baseline
 
-- Choose viewer name, channel, application identifiers, and icons.
+- Use the Fitzroy Viewer 2026 name, channel, isolated application identifiers,
+  and the camera/film/photo magic artwork for the executable and installer.
 - Confirm login, inventory, teleport, voice, media, PBR, EEP, and snapshots.
 - Add a clean migration path so settings do not overwrite Alchemy or another
   installed viewer.

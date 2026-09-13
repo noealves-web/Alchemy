@@ -277,7 +277,7 @@ class ViewerManifest(LLManifest):
         global CHANNEL_VENDOR_BASE
         channel_type=self.channel_type()
         if channel_type == 'release':
-            app_suffix='Viewer'
+            return CHANNEL_VENDOR_BASE
         else:
             app_suffix=self.channel_variant()
         return CHANNEL_VENDOR_BASE + ' ' + app_suffix
@@ -548,10 +548,10 @@ class Windows_x86_64_Manifest(ViewerManifest):
             return
 
         # Velopack packaging author metadata. This is the "Authors" field in the Velopack installer.
-        pack_authors = 'Alchemy Viewer Project'
+        pack_authors = 'Fitzroy Viewer Project'
 
         # Velopack splash progress bar color
-        splash_color = '#00a5dc'
+        splash_color = '#d99124'
 
         # packId determines install folder: %LocalAppData%\{packId}
         # Uses same naming as NSIS INSTNAME for channel separation

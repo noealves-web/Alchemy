@@ -67,7 +67,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDI_LL_ICON,IDC_STATIC,7,7,20,20
-    LTEXT           "Loading Alchemy...",666,36,13,211,8
+    LTEXT           "Loading Fitzroy Viewer 2026...",666,36,13,211,8
 END
 
 
@@ -152,13 +152,13 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "Alchemy Development Group"
-            VALUE "FileDescription", "Alchemy Viewer"
+            VALUE "CompanyName", "Fitzroy Viewer Project"
+            VALUE "FileDescription", "Fitzroy Viewer 2026"
             VALUE "FileVersion", "${VIEWER_VERSION_MAJOR}.${VIEWER_VERSION_MINOR}.${VIEWER_VERSION_PATCH}.${VIEWER_VERSION_REVISION}"
-            VALUE "InternalName", "Alchemy Viewer"
-            VALUE "LegalCopyright", "Copyright (C) 2013-2026 Alchemy Development Group"
-            VALUE "OriginalFilename", "AlchemyViewer.exe"
-            VALUE "ProductName", "Alchemy Viewer"
+            VALUE "InternalName", "Fitzroy Viewer 2026"
+            VALUE "LegalCopyright", "Fitzroy Viewer contributors; based on Alchemy Viewer (C) 2013-2026 Alchemy Development Group"
+            VALUE "OriginalFilename", "FitzroyViewer2026.exe"
+            VALUE "ProductName", "Fitzroy Viewer 2026"
             VALUE "ProductVersion", "${VIEWER_VERSION_MAJOR}.${VIEWER_VERSION_MINOR}.${VIEWER_VERSION_PATCH}.${VIEWER_VERSION_REVISION}"
         END
     END
@@ -182,4 +182,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

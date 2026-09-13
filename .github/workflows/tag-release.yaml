@@ -1,26 +1,10 @@
 name: Tag a Build
 
 on:
-  # schedule event triggers always run on the default branch
-  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
-  schedule:
-    # run "nightly" builds on default branch every fri
-    - cron: "21 2 * * 6"     # 2:21am UTC sat == 7:21pm PDT fri -- see https://crontab.guru/#21_01_*_*_2,4,6
   workflow_dispatch:
     inputs:
-      channel:
-        description: "Channel to configure the build"
-        required: true
-        type: choice
-        default: "Test"
-        options:
-        - "Test"
-        - "Develop"
-        - "Project"
-        - "Beta"
-        - "Release"
       project:
-        description: "Project Name (used for channel name in project builds, and tag name for all builds)"
+        description: "Optional label appended to the Fitzroy release tag"
         required: false
       tag_override:
         description: "Override the tag name (optional). If the tag already exists, a numeric suffix is appended."
@@ -32,8 +16,7 @@ jobs:
     steps:
       - name: Setup Env Vars
         run: |
-          CHANNEL="${{ inputs.channel }}"
-          echo VIEWER_CHANNEL="Alchemy_${CHANNEL:-Develop}" >> ${GITHUB_ENV}
+          echo VIEWER_CHANNEL="Fitzroy-Viewer-2026" >> ${GITHUB_ENV}
           NIGHTLY_DATE=$(date --rfc-3339=date)
           echo NIGHTLY_DATE=${NIGHTLY_DATE} >> ${GITHUB_ENV}
           echo TAG_ID="$(echo ${{ github.sha }} | cut -c1-8)-${{ inputs.project || '${NIGHTLY_DATE}' }}" >> ${GITHUB_ENV}
