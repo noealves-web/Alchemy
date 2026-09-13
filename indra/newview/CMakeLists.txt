@@ -54,12 +54,12 @@ foreach(elem ${country_codes})
 endforeach()
 
 # Copy Icons
-# Replace the icons with the appropriate ones for the channel
-# ('test' is the default)
+# Fitzroy ships one Windows identity. Non-Windows branding remains available
+# only to keep the inherited source tree configurable for upstream work.
 set(ICON_PATH "test")
 set(VIEWER_MACOSX_PHASE "d")
 string(TOLOWER ${VIEWER_CHANNEL} channel_lower)
-if(channel_lower MATCHES "^alchemy release")
+if(channel_lower MATCHES "^fitzroy viewer 2026 release")
     set(ICON_PATH "release")
     set(VIEWER_MACOSX_PHASE "f")
 elseif(channel_lower MATCHES "^alchemy beta")
@@ -71,41 +71,39 @@ elseif(channel_lower MATCHES "^alchemy project")
 endif()
 message(STATUS "Copying icons for ${ICON_PATH}")
 
-find_package(unofficial-alchemy-branding CONFIG REQUIRED)
-set(BRANDING_SOURCE_DIR "${ALCHEMY_BRANDING_DIR}")
 if (WINDOWS)
+  set(FITZROY_BRANDING_DIR "${CMAKE_CURRENT_SOURCE_DIR}/branding/fitzroy")
   execute_process(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy.ico"
+      "${FITZROY_BRANDING_DIR}/fitzroy_viewer_2026.ico"
       "${CMAKE_CURRENT_SOURCE_DIR}/res/ll_icon.ico"
     )
   execute_process(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy_256.BMP"
-      "${CMAKE_CURRENT_SOURCE_DIR}/res/ll_icon.BMP"
-    )
-  execute_process(
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy_256.BMP"
-      "${CMAKE_CURRENT_SOURCE_DIR}/res-sdl/ll_icon.BMP"
-    )
-  execute_process(
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${BRANDING_SOURCE_DIR}/installer/icons/install_icon.ico"
+      "${FITZROY_BRANDING_DIR}/fitzroy_viewer_2026.ico"
       "${CMAKE_CURRENT_SOURCE_DIR}/installers/windows/install_icon.ico"
     )
   execute_process(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      "${BRANDING_SOURCE_DIR}/installer/splash/${ICON_PATH}/install_splash.gif"
+      "${FITZROY_BRANDING_DIR}/fitzroy_install_splash.gif"
       "${CMAKE_CURRENT_SOURCE_DIR}/installers/windows/install_splash.gif"
     )
+  execute_process(
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      "${FITZROY_BRANDING_DIR}/fitzroy_viewer_2026.png"
+      "${CMAKE_CURRENT_SOURCE_DIR}/app_settings/alchemy_logo.png"
+    )
 elseif(DARWIN)
+  find_package(unofficial-alchemy-branding CONFIG REQUIRED)
+  set(BRANDING_SOURCE_DIR "${ALCHEMY_BRANDING_DIR}")
   execute_process(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
       "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy.icns"
       "${CMAKE_CURRENT_SOURCE_DIR}/alchemy.icns"
     )
 elseif(LINUX)
+  find_package(unofficial-alchemy-branding CONFIG REQUIRED)
+  set(BRANDING_SOURCE_DIR "${ALCHEMY_BRANDING_DIR}")
   execute_process(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
       "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy_256.BMP"
@@ -116,11 +114,13 @@ endif ()
 # Branded splash icon for the SDL splash screen (LLSplashScreenSDL loads this
 # PNG at runtime from app_settings). Staged on all platforms so the SDL build
 # finds it regardless of which backend the package ends up using.
-execute_process(
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy_256.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/app_settings/alchemy_logo.png"
-  )
+if (NOT WINDOWS)
+  execute_process(
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      "${BRANDING_SOURCE_DIR}/viewer/icons/${ICON_PATH}/alchemy_256.png"
+      "${CMAKE_CURRENT_SOURCE_DIR}/app_settings/alchemy_logo.png"
+    )
+endif()
 
 if (HAVOK)
    # When using HAVOK_TPV, the library is precompiled, so no need for this
@@ -1820,8 +1820,6 @@ if (WINDOWS)
         res/lltooltranslate.cur
         res/lltoolzoomin.cur
         res/lltoolzoomout.cur
-        res-sdl/ll_icon.BMP
-        res/ll_icon.BMP
         res/ll_icon.ico
         res/resource.h
         res/toolpickobject.cur
@@ -2079,12 +2077,7 @@ set(PACKAGE ON CACHE BOOL
 set(VIEWER_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}$<IF:$<BOOL:${LL_GENERATOR_IS_MULTI_CONFIG}>,/$<CONFIG>,>)
 
 if (WINDOWS)
-    string(TOLOWER ${VIEWER_CHANNEL} channel_lower)
-    if(channel_lower MATCHES "^alchemy release")
-        set(OUTPUT_BINARY_NAME "AlchemyViewer")
-    else()
-        set(OUTPUT_BINARY_NAME "${VIEWER_CHANNEL_ONEWORD}")
-    endif()
+  set(OUTPUT_BINARY_NAME "FitzroyViewer2026")
 
   set_target_properties(${VIEWER_BINARY_NAME}
       PROPERTIES

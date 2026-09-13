@@ -391,13 +391,13 @@ WorkQueue gMainloopWork("mainloop", 1024*1024);
 // Internal globals... that should be removed.
 static std::string gArgs;
 const int MAX_MARKER_LENGTH = 1024;
-const std::string MARKER_FILE_NAME("Alchemy.exec_marker");
-const std::string START_MARKER_FILE_NAME("Alchemy.start_marker");
-const std::string ERROR_MARKER_FILE_NAME("Alchemy.error_marker");
-const std::string LOGOUT_MARKER_FILE_NAME("Alchemy.logout_marker");
-const std::string WATCHDOG_MARKER_FILE_NAME("Alchemy.watchdog_marker");
-const std::string INITED_MARKER_FILE_NAME("Alchemy.inited_marker");
-const std::string CLOSE_EVENT_MARKER_FILE_NAME("Alchemy.close_marker");
+const std::string MARKER_FILE_NAME("FitzroyViewer2026.exec_marker");
+const std::string START_MARKER_FILE_NAME("FitzroyViewer2026.start_marker");
+const std::string ERROR_MARKER_FILE_NAME("FitzroyViewer2026.error_marker");
+const std::string LOGOUT_MARKER_FILE_NAME("FitzroyViewer2026.logout_marker");
+const std::string WATCHDOG_MARKER_FILE_NAME("FitzroyViewer2026.watchdog_marker");
+const std::string INITED_MARKER_FILE_NAME("FitzroyViewer2026.inited_marker");
+const std::string CLOSE_EVENT_MARKER_FILE_NAME("FitzroyViewer2026.close_marker");
 static std::string gLaunchFileOnQuit;
 
 //----------------------------------------------------------------------------
@@ -681,7 +681,7 @@ LLAppViewer::LLAppViewer()
 
     // Need to do this initialization before we do anything else, since anything
     // that touches files should really go through the lldir API
-    gDirUtilp->initAppDirs("AlchemyNext");
+    gDirUtilp->initAppDirs("FitzroyViewer2026");
     //
     // IMPORTANT! Do NOT put anything that will write
     // into the log files during normal startup until AFTER
@@ -2699,7 +2699,7 @@ namespace
             return log_file;
         }
 
-        return gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "Alchemy.log");
+        return gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "FitzroyViewer2026.log");
     }
 
     // Sibling of the log file with its extension replaced (".old", ".crash").
@@ -2736,7 +2736,7 @@ namespace
         std::string log_file = LLError::logFileName();
         if (log_file.empty())
         {
-            log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "Alchemy.log");
+            log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "FitzroyViewer2026.log");
         }
         return log_file;
     }

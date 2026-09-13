@@ -263,7 +263,7 @@ LONG WINAPI catchallCrashHandler(EXCEPTION_POINTERS * /*ExceptionInfo*/)
 bool create_app_mutex()
 {
     bool result = true;
-    LPCWSTR unique_mutex_name = L"AlchemyAppMutex";
+    LPCWSTR unique_mutex_name = L"FitzroyViewer2026AppMutex";
     HANDLE hMutex;
     hMutex = CreateMutex(NULL, TRUE, unique_mutex_name);
     if (GetLastError() == ERROR_ALREADY_EXISTS)
@@ -298,7 +298,7 @@ void ll_nvapi_init(NvDRSSessionHandle hSession)
     }
 
     NvAPI_UnicodeString profile_name;
-    std::wstring w_app_name = TEXT("Alchemy Viewer");
+    std::wstring w_app_name = TEXT("Fitzroy Viewer 2026");
     wsprintf(reinterpret_cast<wchar_t*>(profile_name), L"%s", w_app_name.c_str());
     NvDRSProfileHandle hProfile = 0;
     // (3) Check if we already have an application profile for the viewer
@@ -311,7 +311,7 @@ void ll_nvapi_init(NvDRSSessionHandle hSession)
     else if (status == NVAPI_PROFILE_NOT_FOUND)
     {
         // Don't have an application profile yet - create one
-        LL_INFOS() << "Creating Alchemy Viewer profile for NVIDIA driver" << LL_ENDL;
+        LL_INFOS() << "Creating Fitzroy Viewer 2026 profile for NVIDIA driver" << LL_ENDL;
 
         NVDRS_PROFILE profileInfo;
         profileInfo.version = NVDRS_PROFILE_VER;
