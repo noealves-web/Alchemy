@@ -391,7 +391,11 @@ jobs:
             cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG --target BUILD_AND_RUN_TESTS
           elif $BUILD_VIEWER
           then
-            cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG || fatal "failed building $BUILD_CONFIG viewer"
+            # Let CMake's original exit code and diagnostics reach the Actions log.
+            # The former `fatal` helper was not defined in this workflow, so a
+            # genuine compiler/linker failure was replaced by the misleading
+            # "fatal: command not found" / exit code 127.
+            cmake --build --preset $CMAKE_PRESET_NAME-$BUILD_CONFIG
           else
             echo "::notice::Skipping build due to both viewer and tests being disabled"
           fi
